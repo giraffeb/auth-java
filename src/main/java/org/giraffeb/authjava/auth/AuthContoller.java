@@ -7,10 +7,7 @@ import org.giraffeb.authjava.user.User;
 import org.giraffeb.authjava.user.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,14 +23,11 @@ public class AuthContoller {
         this.userRepo = userRepo;
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<String> signin(@RequestBody String body) throws IOException {
+    @GetMapping("/signin")
+    public ResponseEntity<String> signin(@RequestParam Map<String, String> params) throws IOException {
         var jsonMapper = new ObjectMapper();
 
-        //body parse
-        var requestBodyJsonToMap = jsonMapper.readValue(body, Map.class);
-
-        var userResult = this.userRepo.findByUserId(requestBodyJsonToMap.get("userid").toString());
+        var userResult = this.userRepo.findByUserId(params.get("userid").toString());
         var responseMap = new HashMap<String, String>();
 
         if(userResult.isEmpty()){
