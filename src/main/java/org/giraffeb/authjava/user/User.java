@@ -12,9 +12,10 @@ public class User {
     private Integer noId;
 
     @Column(unique = true)
-    private String userId;
 
-    private String password;
+    private String userId="";
+
+    private String password="";
 
     public User() {
     }
